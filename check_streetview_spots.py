@@ -11,12 +11,13 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from streetview_image import build_streetview_url
+from streetview_image import HEADINGS, build_streetview_url
 from streetview_metadata import get_api_key, get_streetview_metadata
 
 DEFAULT_INPUT = Path("data/streetview_spots.csv")
 DEFAULT_OUTPUT = Path("data/streetview_spots_checked.csv")
 MAX_WORKERS = 10
+URL_COLUMNS = [f"img_url_{h}" for h in HEADINGS]
 
 
 def check_row(row: dict, api_key: str) -> dict:
@@ -54,13 +55,18 @@ def main(input_path: Path, output_path: Path) -> None:
         row["img_status"] = "true" if res["status"] == "OK" else "false"
         row["img_date"] = res["date"]
         row["pano_id"] = res["pano_id"]
-        # API 키는 CSV 에 남기지 않는다. 사용할 때 &key=... 를 붙일 것.
-        row["img_url"] = build_streetview_url(res["pano_id"]) if res["pano_id"] else ""
+        # 방위별(0/90/180/270) 키 포함 URL. CSV 는 .gitignore 로 git 에 올라가지 않는다.
+        for heading, col in zip(HEADINGS, URL_COLUMNS):
+            row[col] = (
+                build_streetview_url(res["pano_id"], heading=heading, api_key=api_key)
+                if res["pano_id"]
+                else ""
+            )
         status_counts[res["status"]] = status_counts.get(res["status"], 0) + 1
 
     with output_path.open("w", encoding="utf-8-sig", newline="") as f:
         writer = csv.DictWriter(
-            f, fieldnames=fieldnames + ["img_status", "img_date", "pano_id", "img_url"]
+            f, fieldnames=fieldnames + ["img_status", "img_date", "pano_id"] + URL_COLUMNS
         )
         writer.writeheader()
         writer.writerows(rows)

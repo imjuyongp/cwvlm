@@ -14,6 +14,9 @@ from streetview_metadata import get_api_key
 
 IMAGE_URL = "https://maps.googleapis.com/maps/api/streetview"
 
+# 360° 를 fov=90 으로 4등분한 촬영 방위 (북=0, 시계방향)
+HEADINGS = (0, 90, 180, 270)
+
 
 def build_streetview_url(
     pano_id: str,
