@@ -64,10 +64,13 @@ def main(input_path: Path, output_path: Path) -> None:
             )
         status_counts[res["status"]] = status_counts.get(res["status"], 0) + 1
 
+    # 이미 존재하는 컬럼은 중복 추가하지 않는다 (같은 파일에 덮어쓸 수 있도록)
+    for col in ["img_status", "img_date", "pano_id"] + URL_COLUMNS:
+        if col not in fieldnames:
+            fieldnames.append(col)
+
     with output_path.open("w", encoding="utf-8-sig", newline="") as f:
-        writer = csv.DictWriter(
-            f, fieldnames=fieldnames + ["img_status", "img_date", "pano_id"] + URL_COLUMNS
-        )
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(rows)
 
