@@ -11,25 +11,14 @@ import os
 import urllib.error
 import urllib.parse
 import urllib.request
-from pathlib import Path
+
+from cwvlm.config import load_dotenv
 
 METADATA_URL = "https://maps.googleapis.com/maps/api/streetview/metadata"
 
 
-def _load_dotenv(path: Path = Path(__file__).with_name(".env")) -> None:
-    """외부 라이브러리 없이 .env 파일의 KEY=VALUE 를 환경변수로 올린다."""
-    if not path.exists():
-        return
-    for line in path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        key, value = line.split("=", 1)
-        os.environ.setdefault(key.strip(), value.strip().strip('"').strip("'"))
-
-
 def get_api_key() -> str:
-    _load_dotenv()
+    load_dotenv()
     key = os.environ.get("GOOGLE_MAPS_API_KEY")
     if not key:
         raise RuntimeError(
@@ -109,9 +98,9 @@ if __name__ == "__main__":
     import sys
 
     # 사용법:
-    #   python streetview_metadata.py 37.5665,126.9780
-    #   python streetview_metadata.py "서울특별시청"
-    #   python streetview_metadata.py --pano <pano_id>
+    #   python -m cwvlm.collect.metadata 37.5665,126.9780
+    #   python -m cwvlm.collect.metadata "서울특별시청"
+    #   python -m cwvlm.collect.metadata --pano <pano_id>
     args = sys.argv[1:]
     if not args:
         query = "37.5665,126.9780"  # 서울시청 (기본 예시)

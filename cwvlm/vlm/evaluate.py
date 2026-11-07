@@ -10,8 +10,8 @@
   - 나머지 피쳐: 정답셋에 값이 있는 행만 대상. 사람이 판단 못 한 행은 제외.
 
 사용법:
-    python vlm_score.py
-    python vlm_score.py --results data/vlm_labelset_20.jsonl \
+    python -m cwvlm.vlm.evaluate
+    python -m cwvlm.vlm.evaluate --results data/vlm_labelset_20.jsonl \
         --truth "data/label_sample_20_정답셋.csv"
 """
 
@@ -20,8 +20,8 @@ import csv
 import json
 from collections import Counter
 
-from vlm_merge import CANDIDATE, EXCLUDE, NO_PHOTO, REVIEW, aggregate
-from vlm_prompt import CSV_COLUMN_NAMES
+from cwvlm.vlm.merge import CANDIDATE, EXCLUDE, NO_PHOTO, REVIEW, aggregate
+from cwvlm.vlm.prompt import CSV_COLUMN_NAMES
 
 BOOL_FEATURES = ["crosswalk", "median_barrier"]
 SCORE_FEATURES = {

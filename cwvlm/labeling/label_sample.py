@@ -6,16 +6,16 @@ URL 에는 API 키가 포함되므로 생성된 CSV 를 외부에 공유하지 �
 (data/*.csv 는 .gitignore 로 제외되어 있다).
 
 사용법:
-    python make_label_sample.py
-    python make_label_sample.py --n 30 --seed 42
+    python -m cwvlm.labeling.label_sample
+    python -m cwvlm.labeling.label_sample --n 30 --seed 42
 """
 
 import argparse
 import csv
 import random
 from pathlib import Path
+from cwvlm.config import HEADINGS
 
-HEADINGS = (0, 90, 180, 270)
 KEEP = ["spot_id", "facility_name", "address", "img_date", "pano_id"]
 LABEL_COLS = ["crosswalk", "median_barrier", "guardrail",
               "lane_marking_clarity", "pedestrian_separation",

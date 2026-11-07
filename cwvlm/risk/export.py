@@ -4,8 +4,8 @@
 마지막에 우선도 분포와 상위 지점을 요약한다.
 
 사용법:
-    python risk_export.py
-    python risk_export.py --results data/risk_scores.jsonl \
+    python -m cwvlm.risk.export
+    python -m cwvlm.risk.export --results data/risk_scores.jsonl \
         --out data/최종_위험도_산정결과.csv
 """
 

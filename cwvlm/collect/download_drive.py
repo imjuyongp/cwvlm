@@ -4,8 +4,8 @@
 이미 받은 파일은 건너뛰므로 중단 후 재개할 수 있다.
 
 사용법:
-    python download_drive_images.py
-    python download_drive_images.py --src data/노인보호구역L.csv \
+    python -m cwvlm.collect.download_drive
+    python -m cwvlm.collect.download_drive --src data/노인보호구역L.csv \
         --out-dir data/images/protection_zone --id-col spot_id
 """
 
@@ -15,8 +15,8 @@ import urllib.error
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from cwvlm.config import HEADINGS
 
-HEADINGS = (0, 90, 180, 270)
 MAX_WORKERS = 8
 # content-type -> 확장자. 확장자를 응답에서 정하므로 PNG/JPEG 가 섞여도 된다.
 EXT = {"image/jpeg": ".jpg", "image/jpg": ".jpg",

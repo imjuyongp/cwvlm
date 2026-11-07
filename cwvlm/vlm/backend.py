@@ -8,19 +8,10 @@ import json
 import os
 from pathlib import Path
 
-from vlm_prompt import PROMPT, RESPONSE_SCHEMA
+from cwvlm.config import load_dotenv
+from cwvlm.vlm.prompt import PROMPT, RESPONSE_SCHEMA
 
 # ---------------------------------------------------------------- 공통
-
-def _load_dotenv(path: Path = Path(__file__).with_name(".env")) -> None:
-    if not path.exists():
-        return
-    for line in path.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if not line or line.startswith("#") or "=" not in line:
-            continue
-        k, v = line.split("=", 1)
-        os.environ.setdefault(k.strip(), v.strip().strip('"').strip("'"))
 
 
 class Backend:
@@ -75,7 +66,7 @@ class OpenRouterBackend(Backend):
     def __init__(self, model: str = "qwen/qwen3-vl-235b-a22b-instruct"):
         from openai import OpenAI  # 지연 임포트
 
-        _load_dotenv()
+        load_dotenv()
         key = os.environ.get("OPENROUTER_API_KEY")
         if not key:
             raise RuntimeError("OPENROUTER_API_KEY 가 .env 또는 환경변수에 없습니다.")

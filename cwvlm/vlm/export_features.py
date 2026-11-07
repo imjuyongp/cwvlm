@@ -1,12 +1,12 @@
 """VLM 판단 결과를 스팟별 피쳐 값만 담은 CSV 로 내보낸다.
 
-vlm_merge.py 가 원본 CSV 에 결과를 덧붙이는 것과 달리, 이쪽은 분석에 바로 쓸
+merge.py 가 원본 CSV 에 결과를 덧붙이는 것과 달리, 이쪽은 분석에 바로 쓸
 피쳐 값만 추려 별도 파일로 만든다. 근거 문장은 길어서 기본으로 빼고,
 --with-evidence 를 주면 포함한다.
 
 사용법:
-    python vlm_export_features.py
-    python vlm_export_features.py --results data/vlm_changwon.jsonl \
+    python -m cwvlm.vlm.export_features
+    python -m cwvlm.vlm.export_features --results data/vlm_changwon.jsonl \
         --src data/streetview_spots_checked.csv \
         --out data/changwon_features.csv --with-evidence
 """
@@ -16,8 +16,8 @@ import csv
 from collections import Counter
 from pathlib import Path
 
-from vlm_merge import CANDIDATE, EXCLUDE, NO_PHOTO, REVIEW, load_results
-from vlm_prompt import CSV_COLUMN_NAMES
+from cwvlm.vlm.merge import CANDIDATE, EXCLUDE, NO_PHOTO, REVIEW, load_results
+from cwvlm.vlm.prompt import CSV_COLUMN_NAMES
 
 # 원본에서 그대로 가져올 식별·맥락 컬럼
 KEEP = ["spot_id", "facility_name", "facility_types", "address",

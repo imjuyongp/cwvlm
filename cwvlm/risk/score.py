@@ -7,9 +7,9 @@
 --runs 로 같은 지점을 여러 번 돌려 재현성을 측정할 수 있다.
 
 사용법:
-    python risk_score.py --limit 10 --runs 3        # 재현성 테스트 (순차)
-    python risk_score.py                            # 231곳 본 실행
-    python risk_score.py --backend openrouter --model <model>
+    python -m cwvlm.risk.score --limit 10 --runs 3        # 재현성 테스트 (순차)
+    python -m cwvlm.risk.score                            # 231곳 본 실행
+    python -m cwvlm.risk.score --backend openrouter --model <model>
 """
 
 import argparse
@@ -20,9 +20,9 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-import risk_combine
-import risk_domains
-from risk_prompt import INPUT_COLUMNS, RESPONSE_SCHEMA, build_prompt
+from cwvlm.risk import combine as risk_combine
+from cwvlm.risk import domains as risk_domains
+from cwvlm.risk.prompt import INPUT_COLUMNS, RESPONSE_SCHEMA, build_prompt
 
 DEFAULT_SRC = Path("data/최종_데이터셋_VLM_공공데이터_out.csv")
 DEFAULT_OUT = Path("data/risk_scores.jsonl")
@@ -71,7 +71,7 @@ class OpenRouterJudge:
     name = "openrouter"
 
     def __init__(self, model: str, think: bool | None = None):
-        from vlm_backend import OpenRouterBackend  # .env 로더와 클라이언트 재사용
+        from cwvlm.vlm.backend import OpenRouterBackend  # .env 로더와 클라이언트 재사용
 
         self.client = OpenRouterBackend(model).client
         self.model = model

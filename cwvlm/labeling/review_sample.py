@@ -5,18 +5,18 @@ VLM 이 방향별로 판정이 갈려 자동 확정하지 못한 건들이다.
 되돌려 병합할 수 있다.
 
 사용법:
-    python make_review_sample.py
-    python make_review_sample.py --verdict "사진 확인 불가" --out data/review_nophoto.csv
-    python make_review_sample.py --with-urls          # 방향별 이미지 URL 을 덧붙인다
+    python -m cwvlm.labeling.review_sample
+    python -m cwvlm.labeling.review_sample --verdict "사진 확인 불가" --out data/review_nophoto.csv
+    python -m cwvlm.labeling.review_sample --with-urls          # 방향별 이미지 URL 을 덧붙인다
 """
 
 import argparse
 import csv
 from pathlib import Path
 
-from vlm_prompt import CSV_COLUMN_NAMES
+from cwvlm.vlm.prompt import CSV_COLUMN_NAMES
+from cwvlm.config import HEADINGS
 
-HEADINGS = (0, 90, 180, 270)
 VERDICT = CSV_COLUMN_NAMES["road_candidate"]
 
 

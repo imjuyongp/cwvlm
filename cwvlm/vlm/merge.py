@@ -5,8 +5,8 @@
 따로 출력한다.
 
 사용법:
-    python vlm_merge.py
-    python vlm_merge.py --results data/vlm_results.jsonl \
+    python -m cwvlm.vlm.merge
+    python -m cwvlm.vlm.merge --results data/vlm_results.jsonl \
         --src data/streetview_spots_checked.csv \
         --out data/streetview_spots_screened.csv
 """
@@ -18,9 +18,9 @@ import statistics
 from collections import Counter
 from pathlib import Path
 
-from vlm_prompt import CSV_COLUMN_NAMES
+from cwvlm.vlm.prompt import CSV_COLUMN_NAMES
+from cwvlm.config import HEADINGS
 
-HEADINGS = (0, 90, 180, 270)
 NO_PHOTO = "사진 확인 불가"
 CANDIDATE, EXCLUDE, REVIEW = "도로 후보", "제외", "확인 필요"
 CONF_ORDER = {"낮음": 0, "보통": 1, "높음": 2}

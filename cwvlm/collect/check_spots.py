@@ -2,8 +2,8 @@
 img_status(true/false) / img_date(YYYY-MM) 컬럼을 추가한 새 CSV 를 생성한다.
 
 사용법:
-    python check_streetview_spots.py
-    python check_streetview_spots.py data/streetview_spots.csv data/streetview_spots_checked.csv
+    python -m cwvlm.collect.check_spots
+    python -m cwvlm.collect.check_spots data/streetview_spots.csv data/streetview_spots_checked.csv
 """
 
 import csv
@@ -11,8 +11,9 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from streetview_image import HEADINGS, build_streetview_url
-from streetview_metadata import get_api_key, get_streetview_metadata
+from cwvlm.collect.image import build_streetview_url
+from cwvlm.collect.metadata import get_api_key, get_streetview_metadata
+from cwvlm.config import HEADINGS
 
 DEFAULT_INPUT = Path("data/streetview_spots.csv")
 DEFAULT_OUTPUT = Path("data/streetview_spots_checked.csv")

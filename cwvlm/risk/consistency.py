@@ -4,8 +4,8 @@
 자기 자신과도 다른 답을 내는 모델은 정확도를 논할 수 없다.
 
 사용법:
-    python risk_consistency.py
-    python risk_consistency.py --results data/risk_test_qwen3.jsonl
+    python -m cwvlm.risk.consistency
+    python -m cwvlm.risk.consistency --results data/risk_test_qwen3.jsonl
 """
 
 import argparse
@@ -13,8 +13,8 @@ import collections
 import json
 from pathlib import Path
 
-import risk_combine
-from risk_prompt import SCORE_LEVELS
+from cwvlm.risk import combine as risk_combine
+from cwvlm.risk.prompt import SCORE_LEVELS
 
 SCORE_FIELDS = ["D1", "D2", "D3", "D4"]          # 모델이 채점
 COMPOSITE_FIELDS = ["environment_risk", "inspection_priority"]  # 코드가 계산

@@ -5,8 +5,8 @@
 여러 스팟이 같은 pano_id 를 공유하면 한 번만 받는다.
 
 사용법:
-    python download_streetview_images.py
-    python download_streetview_images.py data/streetview_spots_checked.csv data/images
+    python -m cwvlm.collect.download_streetview
+    python -m cwvlm.collect.download_streetview data/streetview_spots_checked.csv data/images
 """
 
 import csv
@@ -14,8 +14,9 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from streetview_image import HEADINGS, download_streetview_image
-from streetview_metadata import get_api_key
+from cwvlm.collect.image import download_streetview_image
+from cwvlm.collect.metadata import get_api_key
+from cwvlm.config import HEADINGS
 
 DEFAULT_CSV = Path("data/streetview_spots_checked.csv")
 DEFAULT_IMAGE_DIR = Path("data/images")

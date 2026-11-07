@@ -2,6 +2,7 @@
 .env
 .venv/
 __pycache__/
+*.egg-info/
 .DS_Store
 
 # 데이터 파일은 커밋하지 않음 (코드만 올림)

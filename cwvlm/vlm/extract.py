@@ -4,10 +4,10 @@
 집계(min/median)는 별도 단계에서 수행한다 — 원본 판단을 보존하기 위함.
 
 사용법:
-    python vlm_extract.py --sample 3                      # 무작위 3 pano
-    python vlm_extract.py --panos <pano_id> [...]
-    python vlm_extract.py --csv data/labels/sample_30.csv
-    python vlm_extract.py --sample 3 --backend ollama     # 로컬 실행
+    python -m cwvlm.vlm.extract --sample 3                      # 무작위 3 pano
+    python -m cwvlm.vlm.extract --panos <pano_id> [...]
+    python -m cwvlm.vlm.extract --csv data/labels/sample_30.csv
+    python -m cwvlm.vlm.extract --sample 3 --backend ollama     # 로컬 실행
 """
 
 import argparse
@@ -17,9 +17,9 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from vlm_backend import make_backend
+from cwvlm.vlm.backend import make_backend
+from cwvlm.config import HEADINGS
 
-HEADINGS = (0, 90, 180, 270)
 IMAGE_DIR = Path("data/images/train_spot")
 OUT_PATH = Path("data/vlm_results.jsonl")
 
